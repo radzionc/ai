@@ -3,7 +3,7 @@ try
     tell application "System Events"
         keystroke "c" using command down
     end tell
-    delay 0.2
+    delay 0.1
     
     -- Read the clipboard
     set selectedText to the clipboard
@@ -28,7 +28,7 @@ try
     
     -- Put corrected text into the clipboard
     set the clipboard to correctedText
-    delay 0.2
+    delay 0.1
     
     -- Paste (Cmd+V)
     tell application "System Events"
