@@ -8,4 +8,4 @@ This project is a part of a TypeScript monerepo related to AI tools. It's locate
 
 The TypeScript code is compiled into a single JavaScript file.
 
-It works as Quick Action made with Automator running an AppleScript that calls the JavaScript file.
+It functions as a Quick Action created with Automator, which runs an AppleScript that calls the JavaScript file.
