@@ -15,6 +15,8 @@ This Mac tool allows you to fix the grammar of selected text with a shortcut usi
 git clone https://github.com/radzionc/ai
 cd ai
 yarn
+
+cd product/grammar
 ```
 
 ### 2. Set Up the Environment
