@@ -30,7 +30,7 @@ export OPENAI_API_KEY="your_openai_api_key"
 Run the build script to compile the TypeScript and generate the AppleScript:
 
 ```bash
-bash build.sh
+. ./build.sh
 ```
 
 ### 4. Configure Automator
