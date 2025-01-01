@@ -35,7 +35,7 @@ Run the build script to compile the TypeScript and generate the AppleScript:
 
 ### 4. Configure Automator
 
-1. Open **Automator** on your Mac and create a new **Quick Action**.
+1. Open **Automator** on your Mac and create a new **Quick Action**. In "Workflow receives" dropdown, select "no input" in "any application".
 2. Drag the **Run Shell Script** action into the workflow editor.
 3. In the **Run Shell Script** editor, add the following command:
    ```bash
@@ -46,7 +46,13 @@ Run the build script to compile the TypeScript and generate the AppleScript:
 
 ### 5. Assign a Shortcut
 1. Open **System Preferences** → **Keyboard** → **Shortcuts**.
-2. Find your Quick Action under **Services** and assign a keyboard shortcut.
+2. Find your Quick Action under **Services/General** and assign a keyboard shortcut.
+
+### 6. Enable Accessibility
+1. Open **System Preferences** → **Security & Privacy** → **Privacy**.
+2. Select **Accessibility** from the left sidebar.
+3. Click the lock icon to make changes and add **Automator** to the list of apps allowed to control your computer.
+4. Additionally, you will need to add any apps from which you plan to use the shortcut (e.g., **Google Chrome**, **Safari**, **VSCode**) to the Accessibility list. This is required because macOS restricts interactions between apps unless explicitly authorized.
 
 ### 6. Use the Tool
 1. Highlight text in any application.
