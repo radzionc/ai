@@ -2,6 +2,7 @@
 
 # Exit if any command fails
 set -e
+trap 'echo "An error occurred."; exit 1' ERR
 
 # Ensure OPENAI_API_KEY is set
 if [[ -z "${OPENAI_API_KEY}" ]]; then
