@@ -62,4 +62,11 @@ Run the build script to compile the TypeScript and generate the AppleScript:
 - Ensure you have Node.js installed, as the tool depends on it to run the compiled JavaScript file.
 - If you encounter issues, verify that the `OPENAI_API_KEY` environment variable is set correctly and that the build script ran without errors.
 
+## Logs
+
+The application logs can be found at `~/grammar-fix.log`. The log file contains the last 10 operations, with the most recent entries at the top. Each entry includes:
+- Timestamp
+- Input text
+- Result or error message
+
 Enjoy effortless grammar corrections!
