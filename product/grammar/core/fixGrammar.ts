@@ -8,7 +8,7 @@ export const fixGrammar = async (input: string): Promise<string> => {
       apiKey: process.env.OPENAI_API_KEY,
     })
 
-    const content = `Fix any grammar errors and improve the clarity of the following text while preserving its original meaning:\n\n${input}`
+    const content = `Fix any grammar errors and improve the clarity of the following text while preserving its original meaning. Keep common professional abbreviations like PR, UI, UX, API, TS, etc. as they are since this is for professional work communication:\n\n${input}`
 
     const { choices } = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
