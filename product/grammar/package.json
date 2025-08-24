@@ -6,9 +6,9 @@
     "build": "esbuild index.ts --bundle --platform=node --target=node22 --outfile=dist/index.js"
   },
   "dependencies": {
-    "openai": "^4.77.0"
+    "openai": "^5.15.0"
   },
   "devDependencies": {
-    "esbuild": "^0.24.2"
+    "esbuild": "^0.25.9"
   }
 }
