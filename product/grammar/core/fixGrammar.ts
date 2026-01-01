@@ -8,34 +8,52 @@ export const fixGrammar = async (input: string): Promise<string> => {
       apiKey: process.env.OPENAI_API_KEY,
     })
 
-    const content = [
-      `Fix any grammar errors and improve the clarity of the following text while preserving its original meaning. Keep common professional abbreviations like PR, UI, UX, API, TS, etc. as they are.`,
-      `Preserve existing paragraph structure and keep greetings inline with content rather than on separate lines (Slack style, not email style):`,
-      input,
-    ].join('\n')
-
     const { choices } = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      max_tokens: 1024,
-      temperature: 0.0,
+      model: 'gpt-5-nano',
+      max_completion_tokens: 512,
+      reasoning_effort: 'low',
       messages: [
         {
+          role: 'system',
+          content: [
+            'You are a grammar correction tool.',
+            '',
+            'Your task:',
+            '- Fix grammar, spelling, and punctuation.',
+            '- Improve clarity ONLY where grammar errors reduce clarity.',
+            '',
+            'Rules:',
+            '- Do NOT change meaning or tone.',
+            '- Do NOT rephrase sentences unless required to fix grammar.',
+            '- Do NOT add, remove, or reorder information.',
+            '- If a sentence is grammatically correct, return it unchanged.',
+            '- Preserve paragraph structure and line breaks.',
+            '- Keep greetings inline with content (Slack style, not email style).',
+            '- Do NOT use markdown, lists, or extra formatting.',
+          ].join('\n'),
+        },
+        {
           role: 'user',
-          content,
+          content: [
+            'Fix grammar in the following text.',
+            '',
+            'Constraints:',
+            '- Keep common professional abbreviations exactly as written (PR, UI, UX, API, TS, etc.).',
+            '- Preserve original spacing and formatting.',
+            '',
+            'Text:',
+            input,
+          ].join('\n'),
         },
       ],
     })
 
-    const [{ message }] = choices
-    const result = shouldBePresent(message.content).trim()
+    const result = shouldBePresent(choices[0]?.message?.content).trim()
 
     log({ input, result })
     return result
   } catch (error) {
-    log({
-      input,
-      error,
-    })
+    log({ input, error })
     throw error
   }
 }
