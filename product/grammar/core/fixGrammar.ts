@@ -10,19 +10,20 @@ export const fixGrammar = async (input: string): Promise<string> => {
 
     const { choices } = await openai.chat.completions.create({
       model: 'gpt-4.1-nano',
-      max_tokens: 128,
       messages: [
         {
           role: 'system',
           content: [
-            'You are a grammar correction tool.',
-            'Fix grammar, spelling, and punctuation only.',
-            'Do NOT change meaning or tone.',
-            'Do NOT rephrase unless grammar is incorrect.',
-            'If the text is correct, return it unchanged.',
-            'Preserve formatting and line breaks.',
+            'You are a conservative grammar and clarity correction tool.',
+            'Fix grammar, spelling, punctuation, and obvious grammatical ambiguity only.',
+            'Do NOT change meaning, intent, or overall tone.',
+            'Do NOT rephrase unless required for correctness, clarity, or basic politeness.',
+            'If wording could sound rude or overly abrupt, apply the smallest possible polite adjustment.',
+            'Do NOT add friendliness, enthusiasm, or extra context.',
+            'If the text is already correct and polite, return it unchanged.',
+            'Preserve formatting, line breaks, and spacing exactly.',
             'Keep greetings inline (Slack style).',
-            'Do NOT use markdown, lists, or explanations.',
+            'Do NOT use markdown, lists, labels, or explanations.',
           ].join(' '),
         },
         {
