@@ -21,32 +21,46 @@ else
   # exit 1
 fi
 
-# Define the paths
-TEMPLATE_FILE="FixGrammar.template.applescript"
-OUTPUT_FILE="FixGrammar.applescript"
-
 # Get the absolute paths
 NODE_PATH=$(which node)
 SCRIPT_PATH=$(cd "$(dirname "./dist/index.js")" && pwd)/index.js
 
-# Check if the template file exists
-if [[ ! -f $TEMPLATE_FILE ]]; then
-    echo "Error: Template file $TEMPLATE_FILE not found."
+# Generate FixGrammar.applescript
+FIX_GRAMMAR_TEMPLATE="FixGrammar.template.applescript"
+FIX_GRAMMAR_OUTPUT="FixGrammar.applescript"
+
+if [[ ! -f $FIX_GRAMMAR_TEMPLATE ]]; then
+    echo "Error: Template file $FIX_GRAMMAR_TEMPLATE not found."
     exit 1
 fi
 
-# Replace placeholders in the template and write to output file
-sed -e "s|{{nodePath}}|$NODE_PATH|g" -e "s|{{scriptPath}}|$SCRIPT_PATH|g" "$TEMPLATE_FILE" > "$OUTPUT_FILE"
-
-# Make the output script readable
-chmod 644 "$OUTPUT_FILE"
-
+sed -e "s|{{nodePath}}|$NODE_PATH|g" -e "s|{{scriptPath}}|$SCRIPT_PATH|g" "$FIX_GRAMMAR_TEMPLATE" > "$FIX_GRAMMAR_OUTPUT"
+chmod 644 "$FIX_GRAMMAR_OUTPUT"
 echo "FixGrammar.applescript has been generated successfully."
 
+# Generate VoiceToMessage.applescript
+VOICE_TEMPLATE="VoiceToMessage.template.applescript"
+VOICE_OUTPUT="VoiceToMessage.applescript"
 
-OUTPUT_FILE_ABSOLUTE_PATH=$(cd "$(dirname "$OUTPUT_FILE")" && pwd)/$(basename "$OUTPUT_FILE")
+if [[ ! -f $VOICE_TEMPLATE ]]; then
+    echo "Error: Template file $VOICE_TEMPLATE not found."
+    exit 1
+fi
+
+sed -e "s|{{nodePath}}|$NODE_PATH|g" -e "s|{{scriptPath}}|$SCRIPT_PATH|g" "$VOICE_TEMPLATE" > "$VOICE_OUTPUT"
+chmod 644 "$VOICE_OUTPUT"
+echo "VoiceToMessage.applescript has been generated successfully."
+
+# Print setup instructions
+SCRIPT_DIR=$(cd "$(dirname "$FIX_GRAMMAR_OUTPUT")" && pwd)
+FIX_GRAMMAR_ABSOLUTE="$SCRIPT_DIR/FixGrammar.applescript"
+VOICE_ABSOLUTE="$SCRIPT_DIR/VoiceToMessage.applescript"
 
 echo ""
-echo "To use the generated FixGrammar.applescript in Automator, create a new workflow and add the following Shell Script action:"
+echo "To use in Automator, create Quick Actions and add the following Shell Script actions:"
 echo ""
-echo "osascript \"$OUTPUT_FILE_ABSOLUTE_PATH\""
+echo "  Grammar fix (light editing):"
+echo "  osascript \"$FIX_GRAMMAR_ABSOLUTE\""
+echo ""
+echo "  Voice-to-message (condense dictation):"
+echo "  osascript \"$VOICE_ABSOLUTE\""
