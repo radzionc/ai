@@ -19,9 +19,12 @@ try
     
     -- Path to your compiled grammar script
     set scriptPath to "{{scriptPath}}"
+
+    -- Path to environment variables used by Automator's clean shell
+    set envPath to "{{envPath}}"
     
     -- Build the shell command (voice mode):
-    set shellCommand to "echo " & quoted form of selectedText & " | " & nodePath & " " & quoted form of scriptPath & " voice"
+    set shellCommand to ". " & quoted form of envPath & "; printf %s " & quoted form of selectedText & " | " & quoted form of nodePath & " " & quoted form of scriptPath & " voice"
     
     -- Run it
     set correctedText to do shell script shellCommand

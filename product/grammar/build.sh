@@ -4,14 +4,8 @@
 set -e
 trap 'echo "An error occurred."; exit 1' ERR
 
-# Ensure OPENAI_API_KEY is set
-if [[ -z "${OPENAI_API_KEY}" ]]; then
-  echo "Error: OPENAI_API_KEY environment variable is not set."
-  exit 1
-fi
-
-# Run the build script with OPENAI_API_KEY injected
-yarn run build --define:process.env.OPENAI_API_KEY="'${OPENAI_API_KEY}'"
+# Run the build script. Runtime environment variables are loaded by AppleScript.
+yarn run build
 
 # Check if the build was successful
 if [[ $? -eq 0 ]]; then
@@ -24,6 +18,7 @@ fi
 # Get the absolute paths
 NODE_PATH=$(which node)
 SCRIPT_PATH=$(cd "$(dirname "./dist/index.js")" && pwd)/index.js
+ENV_PATH=$(cd "$(dirname "./.envrc")" && pwd)/.envrc
 
 # Generate FixGrammar.applescript
 FIX_GRAMMAR_TEMPLATE="FixGrammar.template.applescript"
@@ -34,7 +29,7 @@ if [[ ! -f $FIX_GRAMMAR_TEMPLATE ]]; then
     exit 1
 fi
 
-sed -e "s|{{nodePath}}|$NODE_PATH|g" -e "s|{{scriptPath}}|$SCRIPT_PATH|g" "$FIX_GRAMMAR_TEMPLATE" > "$FIX_GRAMMAR_OUTPUT"
+sed -e "s|{{nodePath}}|$NODE_PATH|g" -e "s|{{scriptPath}}|$SCRIPT_PATH|g" -e "s|{{envPath}}|$ENV_PATH|g" "$FIX_GRAMMAR_TEMPLATE" > "$FIX_GRAMMAR_OUTPUT"
 chmod 644 "$FIX_GRAMMAR_OUTPUT"
 echo "FixGrammar.applescript has been generated successfully."
 
@@ -47,7 +42,7 @@ if [[ ! -f $VOICE_TEMPLATE ]]; then
     exit 1
 fi
 
-sed -e "s|{{nodePath}}|$NODE_PATH|g" -e "s|{{scriptPath}}|$SCRIPT_PATH|g" "$VOICE_TEMPLATE" > "$VOICE_OUTPUT"
+sed -e "s|{{nodePath}}|$NODE_PATH|g" -e "s|{{scriptPath}}|$SCRIPT_PATH|g" -e "s|{{envPath}}|$ENV_PATH|g" "$VOICE_TEMPLATE" > "$VOICE_OUTPUT"
 chmod 644 "$VOICE_OUTPUT"
 echo "VoiceToMessage.applescript has been generated successfully."
 

@@ -21,6 +21,7 @@ export const fixGrammar = async (input: string): Promise<string> => {
             'Remove awkward phrasing, redundancy, and unnatural sentence structure.',
             'Do NOT add new information, opinions, enthusiasm, or friendliness.',
             'Keep the tone neutral, concise, and professional.',
+            'Preserve the original language of the input; do not translate it.',
             'If the original text is already clear and well-written, make minimal or no changes.',
             'Preserve line breaks and spacing unless changing them clearly improves readability.',
             'Keep greetings inline (Slack style).',

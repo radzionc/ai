@@ -9,6 +9,12 @@ The grammar product has two modes, each triggered by its own Quick Action and sh
 
 Do the following once per Quick Action (you may already have the Grammar fix one).
 
+## 0. Environment
+
+The generated AppleScripts load environment variables from `product/grammar/.envrc`.
+Make sure it exports `OPENAI_API_KEY`; Automator does not inherit your terminal
+or `direnv` environment automatically.
+
 ## 1. Create the Quick Action in Automator
 
 1. Open **Automator** (Spotlight → “Automator”).
